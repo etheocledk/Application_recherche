@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@5.9.55/css/materialdesignicons.min.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+            <div class="container">
+                <div class="header__container">
+                    <div class="header__container__left">
+                        <p>Where in the world?</p>
+                    </div>
+                    <div class="header__container__right two">
+                        <span class="mdi mdi-moon-waning-crescent"></span>
+                        <p>Dark Mode</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="container">
+                <div class="main__show__plus__top">
+                    <a href="./index.html">
+                        <h1><span>&leftarrow;</span> Back</h1>
+                    </a>
+                </div>
+                <div class="main__show__plus__bottom">
+                    <div class="countrie__image">
+                        <img src="https://flagcdn.com/w320/as.png" alt="">
+                    </div>
+                    <div class="countrie__description__parent">
+                        <h1></h1>
+                        <div class="countrie__description">
+                            <div class="countrie__description__left">
+                                <p><span class="name-details">Native Name:</span> <span></span></p>
+                                <p><span class="name-details">Population:</span> <span></span></p>
+                                <p><span class="name-details">Region:</span> <span></span></p>
+                                <p><span class="name-details">Sub Region:</span> <span></span></p>
+                                <p><span class="name-details">Capital:</span> <span></span></p>
+                            </div>
+                            <div class="countrie__description__right">
+                                <p><span class="name-details">Top Level Domain:</span> <span></span></p>
+                                <p><span class="name-details">Currencies:</span> <span></span></p>
+                                <div class="lang"><span class="name-details">Languages:</span>
+                                    <div class="langue-names"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="boder__countries">
+                            <span class="name-details">Boder countries:</span>
+                            <div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        let darkBtnn = document.querySelector('.header__container__right.two')
+        if (darkBtnn) {
+            darkBtnn.addEventListener('click', () => {
+                let p = document.querySelectorAll('.boder__countries div p')
+                let hBack = document.querySelector('.main__show__plus__top a h1')
+                let body = document.querySelector('body')
+                let headerColor = document.querySelector('.header__container')
+                if (!body.classList.contains('active')) {
+                    p.forEach(item => {
+                        item.classList.add('active')
+                    })
+                    headerColor.classList.add('active')
+                    body.classList.add('active')
+                    hBack.classList.add('active')
+                } else {
+                    hBack.classList.remove('active')
+                    p.forEach(item => {
+                        item.classList.remove('active')
+                    })
+                    headerColor.classList.remove('active')
+                    body.classList.remove('active')
+                }
+
+                let isDarkMode = body.classList.contains('active')
+                console.log('daek', isDarkMode);
+                localStorage.setItem('darkMode', isDarkMode)
+            })
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            let isDarkModeEnabled = localStorage.getItem('darkMode')
+            let headerColor = document.querySelector('.header__container')
+            let hBack = document.querySelector('.main__show__plus__top a h1')
+            let body = document.querySelector('body')
+            let p = document.querySelectorAll('.boder__countries div p')
+            console.log(isDarkModeEnabled === 'false');
+            if (isDarkModeEnabled === 'true') {
+                body.classList.add('active')
+                headerColor.classList.add('active')
+                hBack.classList.add('active')
+                p.forEach(item => {
+                    item.classList.add('active')
+                })
+            } else {
+                hBack.classList.remove('active')
+                body.classList.remove('active')
+                headerColor.classList.remove('active')
+
+                p.forEach(item => {
+                    item.classList.remove('active')
+                })
+            }
+        })
+
+        let informCountrie = JSON.parse(localStorage.getItem('information'))
+        console.log(informCountrie)
+        document.querySelector('.countrie__image img').src = `${informCountrie[0].countrieImg}`
+        document.querySelector('.countrie__description__parent h1').textContent = `${informCountrie[0].Namecountrie}`
+        document.querySelector('.countrie__description__left p:nth-child(1) span:nth-child(2)').textContent = `${informCountrie[0].native}`
+        document.querySelector('.countrie__description__left p:nth-child(2) span:nth-child(2)').textContent = `${informCountrie[0].population}`
+        document.querySelector('.countrie__description__left p:nth-child(3) span:nth-child(2)').textContent = `${informCountrie[0].region}`
+        document.querySelector('.countrie__description__left p:nth-child(4) span:nth-child(2)').textContent = `${informCountrie[0].subregion}`
+        document.querySelector('.countrie__description__left p:nth-child(5) span:nth-child(2)').textContent = `${informCountrie[0].capital}`
+
+        document.querySelector('.countrie__description__right p:nth-child(1) span:nth-child(2)').textContent = `${informCountrie[0].level}`
+        document.querySelector('.countrie__description__right p:nth-child(2) span:nth-child(2)').textContent = `${informCountrie[0].val}`
+        let langueText = ``
+        let divLangue = document.querySelector('.langue-names')
+        informCountrie[0].languages.forEach(item => {
+            langueText += `
+            <p>${item}</p>
+            `
+            divLangue.innerHTML = langueText
+        })
+
+        let countryBorder = document.querySelector('.boder__countries div')
+        let constBoder = ``
+        let boderInfo = informCountrie[0].boders
+        boderInfo.forEach(item => {
+            constBoder += `
+            <p>${item}</p>
+            `
+        })
+        countryBorder.innerHTML = constBoder
+    </script>
+</body>
+
+</html>

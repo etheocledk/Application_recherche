@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@5.9.55/css/materialdesignicons.min.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+            <div class="container">
+                <div class="header__container">
+                    <div class="header__container__left">
+                        <p>Where in the world?</p>
+                    </div>
+                    <div class="header__container__right">
+                        <span class="mdi mdi-moon-waning-crescent"></span>
+                        <p>Dark Mode</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="container">
+                <div class="main__container">
+                    <div class="main__container__top">
+                        <div class="main__container__top__input">
+                            <input type="text" placeholder="Search for a country...">
+                            <div>
+                                <span class="mdi mdi-magnify"></span>
+                            </div>
+                        </div>
+                        <div class="main__container__top__select">
+                            <div class="main__container__top__select__title">
+                                <div class="filter__name">
+                                    <p class="select__field">Filter By Region </p>
+                                    <span class="mdi mdi-chevron-down"></span>
+                                </div>
+                                <div class="main__container__top__select__option">
+                                    <p>...</p>
+                                    <p>Africa</p>
+                                    <p>Americas</p>
+                                    <p>Asia</p>
+                                    <p>Europe</p>
+                                    <p>Oceania</p>
+                                    <p>Antarctic</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main__container__bottom">
+
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+
+    <script>
+
+let darkBtn = document.querySelector('.header__container__right')
+    if (darkBtn) {
+        darkBtn.addEventListener('click', () => { 
+            let countrie__structure = document.querySelectorAll('.countrie__structure')
+            let body = document.querySelector('body')
+            let headerColor = document.querySelector('.header__container')
+            let input = document.querySelector('.main__container__top .main__container__top__input input')
+            let inputFilter = document.querySelector('.main__container__top__select__title .filter__name')
+            let inputFilterSelect = document.querySelector('.main__container__top__select__option')
+            if (!body.classList.contains('active')) {
+                body.classList.add('active')
+                headerColor.classList.add('active')
+                input.classList.add('active')
+                inputFilter.classList.add('active')
+                inputFilterSelect.classList.add('activ')
+                countrie__structure.forEach(item => {
+                    item.classList.add('active')
+                })
+            } else {
+                body.classList.remove('active')
+                headerColor.classList.remove('active')
+                input.classList.remove('active')
+                inputFilter.classList.remove('active')
+                inputFilterSelect.classList.remove('activ')
+                countrie__structure.forEach(item => {
+                    item.classList.remove('active')
+                }) 
+            }
+            let isDarkMode = body.classList.contains('active')
+            console.log('daek',isDarkMode);
+            localStorage.setItem('darkMode', isDarkMode)
+        })
+    }
+    
+        document.addEventListener('DOMContentLoaded', () => {
+            let countrie__structure = document.querySelectorAll('.countrie__structure')
+            let isDarkModeEnabled = localStorage.getItem('darkMode')
+            let headerColor = document.querySelector('.header__container')
+            let input = document.querySelector('.main__container__top .main__container__top__input input')
+            let inputFilter = document.querySelector('.main__container__top__select__title .filter__name')
+            let inputFilterSelect = document.querySelector('.main__container__top__select__option')
+            let body = document.querySelector('body')
+            if (isDarkModeEnabled === 'true') {
+                body.classList.add('active')
+                headerColor.classList.add('active')
+                countrie__structure.forEach(item => {
+                    item.classList.add('active')
+                })
+                input.classList.add('active')
+                inputFilter.classList.add('active')
+                inputFilterSelect.classList.add('activ')
+            } else {
+                body.classList.remove('active')
+                headerColor.classList.remove('active')
+                input.classList.remove('active')
+                inputFilter.classList.remove('active')
+                inputFilterSelect.classList.remove('activ')
+                countrie__structure.forEach(item => {
+                    item.classList.remove('active')
+                })
+            }
+        })
+    </script>
+</body>
+
+</html>
